@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# PS 4 - 16.01.2022 Operacje na danych
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+W pliku vehicles.js znajduje się lista pojazdów, która będzie podstawą do poniższych zadań. Struktura danych dla przykładowego pojazdu wygląda jak poniżej:
+  ```
+  {
+      type: 'car', // występują 2 typy 'car' oraz 'motorbike'
+      brand: 'Skoda',
+      model: 'Ocatavia',
+      engineType: 'petrol' // występują 3 typy silników 'petrol' | 'hybrid' | 'electric'
+  }
+  ```
 
-## Available Scripts
+# Zadanie 1 - wyświetlenie danych w konsoli
+W komponencie App.js wczytaj dane z pliku vehicles.js, przypisz je do stanu (nazwijmy go "resultsToDisplay"), a następnie wypisz w konsoli.
 
-In the project directory, you can run:
+# Zadanie 2 - wyświetlenie listy pojazdów w komponencie Results (funkcja .map)
+Wyświetl w komponencie Results listę pojazdów w postaci listy nienumerowanej <ul>
+  ```
+ <ul>
+    <li>...</li>
+    <li>...</li>
+        ...
+ </ul>
+  ```
+  w formacie ${marka} - ${model}, aby uzyskać efekt jak poniżej
+```
+- Skoda Octavia
+- Mazda 6
+...
+  ```
+  Lista pojazdów powinna zostać przekazana jako właściwość (props o nazwie "vehiclesToDisplay") w komponencie Results (komponent nadrzędny App przekazuje pojazdy dla komponentu Results), poczym Results wyświetla otrzymane pojazdy w swojej metodzie render.
+# Zadanie 3 - Filtr po nazwie marki (funkcje [.find](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) [.includes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes))
+W komponencie Header będą znajdować się filtry za pomocą których będziemy wybierać które pojazdy powinny zostać wyświetlone. W ramach tego zadania zróbmy filtrowanie po nazwie marki (brand).
+Będziemy do tego potrzebowali:
+- pola tekstowego - <input>
+- przycisku "Wyszukaj" - <button> Wyszukaj </button>
 
-### `npm start`
+Wyszukiwanie powinno działać również dla fragmentu tesktu np. dla frazy "da" powinny sięwyświetlićpojazdy marki "Skoda" oraz "Honda" itp.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+W komponencie Header utwórz input typu text (pole tekstowe) oraz przycisk z nazwą "Szukaj"
+Wyszukiwarka powinna filtrować wyniki po nazwie marki pojazdu, wyszukanie powinno działać również po fragmencie tekstu, zatem dla frazy "da" powinny się wyświetlić pojazdy marki "Skoda" oraz "Mazda" itp.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Funkcjonalności dodatkowe (zalecane do zrobienia po zadaniu 7):
+- wciśnięcie przycisku "Enter" po wpisaniu frazy powinno uruchomić wyszukiwanie
+- ignorowanie dużych / małych liter podczas wyszukiwania
+- wyszukiwanie po marce lub modelu pojazdu
 
-### `npm test`
+# Zadanie 4 - Filtr po typie pojazdu
+Do filtrów w komponencie Header dodaj nowy filtr "Tylko samochody", który będzie inputem typu checkbox. Potrzebny będzie również nowy stan "searchOnlyCars", który będzie przyjmował wartości true / false
+```
+  <p> Tylko samochody </p>
+  <input type='checkbox' onChange={this.handleOnlyCarsChange} value={this.state.searchOnlyCars} ></input>
+```
+Zaznaczenie tego pola i wciśnięcie "Szukaj" powinno filtrować tylko samochody. Filtr ten powinien "współpracować" z filtrem z poprzedniego zadania.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Zadanie 5 - Filtr po typie silnika
+Do filtrów w komponencie Header dodaj nowy filtr "Typ silnika", który będzie dropdownem z wszystkimi dostępnymi opcjami typów silnika. Powinieneś zatem przeszukać wszystkie pojazdy (listę obiektów) oraz na jej podstawie utworzyć unikatową listę typów silników (nazwijmy je "uniqueVehicleEngineTypes").
+Dropdown reprezentuje znacznik < select > a poszczególną opcję do wyboru < option >, zatem lista będzie wyglądała jak poniżej.
 
-### `npm run build`
+```
+<select onChange={...}>
+    {uniqueVehicleEngineTypes.map((engineType) =><option key={engineType} value={engineType}>{engineType}</option>)}
+</select>
+```
+Wybranie elementu z listy i kliknięcie na "wyszukaj" powinno pokazać tylko pasujące wyniki. Filtr ten powinien "współpracować" z filtrami z poprzednich zadań.
+Lista powinna zawierać również pozycję 'All types', która będzie pierwszą wartością na liście a zarazem będzie domyślnie zaznaczona.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Podsumowanie:
+Dzięki dynamicznemu mapowaniu typów silników nie musimy martwić się o zgodność naszego rozwiązania w przypadku dodania lub usunięcia nowych rodzajów silnika.
+Dodaj do listy z pliku vehicles.js nowy pojazd z silnikiem wodorowym (patrz poniżej - zupełnie nowa pozycja) i zobacz jak zachowuje się aplikacja. W podobny sposób możesz usunąć np pojazdy hybrydowe.
+```
+  {
+    type: "car",
+    brand: "Toyota",
+    model: "Mirai",
+    engineType: "hydrogen",
+  },
+```
+Gdybyśmy zamiast mapowania podali listę wartości 'na sztywno', zachowanie aplikacji nie było by zgodne z otrzymywanymi danymi (wystąpiły by brakujące lub nadmiarowe opcje na liście).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Zadanie 6 - Reset filtrów (react setState callback)
+Do sekcji filtrów dodaj przycisk "Resetuj filtry", który na zdarzenie onClick będzie wywoływał funkcję handleResetFilters(). Funkcja ta ma za zadanie ustawić stany początkowe dla filtrów oraz wyświetlić na nowo wyniki wyszukiwania.
+```
+    handleResetFilters = () => {
+        this.setState({
+            searchPhrase: '',
+            searchOnlyCars: false,
+            searchEngineType: ''
+        })
+        this.filterVehicles();
+    }
+```
+Sprawdź zachowanie aplikacji, czy działa poprawnie ?
+Jeżeli nie do końca to mamy problem 'wyścigu', ponieważ funkcja setState (ogólnie stanowość w React) jest asynchroniczna - oznacza to nic innego jak brak pewności że wszystko zadziała jak powinno. W powyższym przypadku funkcja this.filterVehicles() zostaje wywoływana przed ustawieniem stanów co powoduje niechciane zachowanie. Aby rozwiązać taki problem możemy się posłużyć rozwiązaniem typu [setState callback](https://upmostly.com/tutorials/how-to-use-the-setstate-callback-in-react), zatem wymusić wywołanie filterVehicles tuż po ustawieniu stanów.
+```
+    handleResetFilters = () => {
+        this.setState({
+            searchPhrase: '',
+            searchOnlyCars: false,
+            searchEngineType: ''
+        },() => {
+            this.filterVehicles();
+        });
+    }
+```
+# Zadanie 7 - Filtry dynamiczne - Usuń przycisk szukaj
+Celem tego zadania jest usunięcie [zakomentowanie] przycisku "Szukaj" przy zachowaniu funkcjonalności filtrowania. Zmiana któregokolwiek z filtrów powinna automatycznie odświeżać listę wyników (w praktyce będzie to wywołanie metody podpiętej pod przycisk po każdej zmianie inputa [onChange])
