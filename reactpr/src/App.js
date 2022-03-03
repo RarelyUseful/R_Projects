@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import LeftColumn from "./components/LeftColumn/LeftColumn";
+import RightColumn from "./components/RightColumn/RightColumn";
+import Header from "./components/Header/Header";
+import styles from "./App.module.scss";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [timerValue, setTimerValue] = useState(0);
+
+  const resetTimer = () => {
+    setTimerValue(0);
+  };
+
+  useEffect(() => {
+    let timer;
+    timer = setTimeout(() => {
+      setTimerValue(timerValue + 1);
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timerValue]);
+
+  const changeTimer = (value) => {
+    setTimerValue(value);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.appWrapper}>
+      <Header timerValue={timerValue} />
+      <div className={styles.columnsWrapper}>
+        {timerValue < 500 && <LeftColumn timerValue={timerValue} />}
+        <RightColumn onDoubleButtonClick={resetTimer} handleChangeTimer={changeTimer} />
+      </div>
     </div>
   );
 }
