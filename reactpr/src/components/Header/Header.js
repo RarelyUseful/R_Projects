@@ -39,7 +39,7 @@ class Header extends React.Component {
     return (
       <div className={styles.HeaderWrapper}>
         <p>
-          <div>lalala laaa</div>
+          <div>Header component</div>
           <br />
           <input value={searchPhrase} onChange={this.handleSearchPhraseChange}></input>
           <button onClick={this.filterVehicles}>Szukaj</button>
