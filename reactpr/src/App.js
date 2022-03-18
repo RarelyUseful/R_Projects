@@ -1,22 +1,25 @@
-import Results from "./components/Results/Results";
-import { useState } from "react";
-// import RightColumn from './components/RightColumn/RightColumn';
+import ProductsList from "./components/ProductsList/ProductsList";
+import ShopingList from "./components/ShopingList/ShopingList";
 import Header from "./components/Header/Header";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+
+// import ProductsFilters from './components/ProductsFilters/ProductsFilters';
 import styles from "./App.module.scss";
-import vehicles from "./common/consts/vehicles";
 
 function App() {
-  const [resultsToDisplay, setResultsToDisplay] = useState(vehicles);
-
-  console.log("stan resultsToDisplay", resultsToDisplay);
   return (
-    <div className={styles.appWrapper}>
-      <Header vehicles={vehicles} sendFilteredVehiclesToParent={setResultsToDisplay} />
-      <div className={styles.columnsWrapper}>
-        <Results cars={resultsToDisplay} />
-        {/* <RightColumn /> */}
+    <>
+      {!window.localStorage.getItem("LoggedUser") && <Navigate to="/" />}
+
+      <div className={styles.appWrapper}>
+        <Header />
+        {/* <ProductsFilters /> */}
+        <div className={styles.columnsWrapper}>
+          <ProductsList />
+          <ShopingList />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
