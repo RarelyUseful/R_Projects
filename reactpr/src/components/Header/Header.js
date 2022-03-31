@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "../../common/styles/Headers.module.scss";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <div className={styles.Wrapper}>
-      <p>Hello {window.localStorage.getItem("LoggedUser")}</p>
+      <p>Hello {JSON.parse(window.localStorage.getItem("LoggedUser"))}</p>
       <p>
         <Link to="/">
           {" "}
