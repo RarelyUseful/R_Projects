@@ -4,32 +4,35 @@ import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   let navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-  const signInUser = (e) => {
-    //e.preventDefault();
-    window.localStorage.setItem("LoggedUser", JSON.stringify(username));
+  const signInUser = () => {
+    window.localStorage.setItem("user", JSON.stringify({ firstName, lastName }));
+    // window.localStorage.setItem("lastName", JSON.stringify(userlastname));
     navigate("/shopping");
   };
   return (
     <div>
       <header className={commonColumnsStyles.AppHeader}>
         <p>Login Page</p>
-        <p>Debugging: logged user = {localStorage.getItem("LoggedUser")}</p>
+        <p>
+          Debugging: user = {localStorage.getItem("user")}
+          {/* name = {JSON.parse(localStorage.getItem("user")).firstName} */}
+          {/* lastname = {JSON.parse(localStorage.getItem("user")).lastName} */}
+        </p>
         <div>
           <input
-            placeholder="User Name"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
+            placeholder="Name"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+          ></input>
+          <input
+            placeholder="Lastname"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
           ></input>
           <button onClick={signInUser}>Sign in</button>
-
-          {/* <form onSubmit={signInUser}>
-            <label>User name</label>
-            <input onChange={(event) => setUsername(event.target.value)}></input>
-
-            <button type="submit"> Sign in</button>
-          </form> */}
         </div>
       </header>
     </div>

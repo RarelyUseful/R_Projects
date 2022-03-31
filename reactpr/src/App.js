@@ -6,9 +6,25 @@ import { Navigate } from "react-router-dom";
 import styles from "./App.module.scss";
 
 function App() {
+  let savedUser = localStorage.getItem("user");
+  // let isUserValid = () => {
+  //   if (JSON.parse(savedUser.firstName).length() > 0 && JSON.parse(savedUser.lastName).length() > 0) {
+  //     return true;
+  // } else
+  if (!savedUser || !JSON.parse(savedUser).firstName || !JSON.parse(savedUser).lastName) {
+    return <Navigate to="/" />;
+  } //else if (JSON.parse(savedUser).firstName.length() < 1) {
+  //return <Navigate to="/" />;
+  // }
+
+  // const userExist = localStorage.getItem("user");
+
+  // if (!userExist) {
+  //   return <Navigate to="/" />;
+  // }
   return (
     <>
-      {!window.localStorage.getItem("LoggedUser") && <Navigate to="/" />}
+      {/* {!isUserValid && <Navigate to="/" />} */}
 
       <div className={styles.appWrapper}>
         <Header />
