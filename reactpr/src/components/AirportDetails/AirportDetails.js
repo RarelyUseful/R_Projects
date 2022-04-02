@@ -1,15 +1,15 @@
 import React from "react";
 import commonColumnsStyles from "../../common/styles/Columns.module.scss";
 
-function ProductsList() {
+function AirportDetails() {
   return (
     <div className={commonColumnsStyles.App}>
       <header className={commonColumnsStyles.AppHeader}>
-        <p>Lista lotnisk</p>
-        {JSON.parse(window.localStorage.getItem("airports"))?.map((airport) => (
+        <p>Szczegóły lotniska</p>
+        {JSON.parse(localStorage.getItem("airports")).map((airport) => (
           <span key={airport.id}>
             {" "}
-            {airport.name} {airport.id}{" "}
+            {airport.name} {airport.city}{" "}
           </span>
         ))}
       </header>
@@ -17,4 +17,4 @@ function ProductsList() {
   );
 }
 
-export default ProductsList;
+export default AirportDetails;
