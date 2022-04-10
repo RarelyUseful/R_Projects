@@ -1,22 +1,23 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import commonColumnsStyles from "../../common/styles/Columns.module.scss";
+import { Link } from "react-router-dom";
+import { Stack, Paper } from "@mui/material";
 
-function ProductsList() {
-  let navigate = useNavigate();
+function AirportsList(props) {
   return (
     <div className={commonColumnsStyles.App}>
       <header className={commonColumnsStyles.AppHeader}>
         <p>Lista lotnisk</p>
-        {JSON.parse(window.localStorage.getItem("airports"))?.map((airport) => (
-          <span onClick={() => navigate("/airport/details/" + airport.id)} key={airport.id}>
-            {" "}
-            {airport.name} {airport.id}{" "}
-          </span>
-        ))}
+        <Stack spacing={2}>
+          {/* {airportsList?.map((airport) => (
+            <Link key={airport.id} to={`/airport/details/${airport.id}`}>
+              <Paper>{`${airport.name} - ${airport.id}`}</Paper>
+            </Link>
+          ))} */}
+        </Stack>
       </header>
     </div>
   );
 }
 
-export default ProductsList;
+export default AirportsList;

@@ -4,11 +4,9 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import LoginPage from "./components/LoginPage/LoginPage";
-// import ProductsList from './components/ProductsList/ProductsList';
+import AirportDetails from "./components/AirportDetails/AirportDetails";
 import reportWebVitals from "./reportWebVitals";
 import AirportsList from "./components/AirportsList/AirportsList";
-import AirportDetails from "./components/AirportDetails/AirportDetails";
-
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
