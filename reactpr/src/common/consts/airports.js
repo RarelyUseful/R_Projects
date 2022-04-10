@@ -1,4 +1,4 @@
-const airports = [
+export const airports = [
   {
     name: "Okecie",
     city: "Warsaw",
