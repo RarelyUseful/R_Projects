@@ -7,8 +7,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
-
-function AirportDetails() {
+import { getAirportByIdSelector } from "../../redux/airports/selectors";
+import { connect } from "react-redux";
+function AirportDetails(props) {
   let navigate = useNavigate();
   const { id } = useParams();
   const handleRemoveAirportFromList = () => {
@@ -16,7 +17,7 @@ function AirportDetails() {
   };
 
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
-
+  const airportDetails = props.getAirportById(id);
   return (
     <>
       <Dialog open={dialogIsOpen}>
@@ -36,18 +37,22 @@ function AirportDetails() {
       <div className={commonColumnsStyles.App}>
         <header className={commonColumnsStyles.AppHeader}>
           <p>Airport Details</p>
-          {/* {airportDetails &&
-        <>
-        <span>Państwo: {airportDetails.country}</span>
-        <span>Miasto: {airportDetails.city}</span>
-        <span>Nazwa: {airportDetails.name}</span>
-        <span>KOD: {airportDetails.iata_code}</span>
-        </>
-} */}
+          {airportDetails && (
+            <>
+              <span>Państwo: {airportDetails.country}</span>
+              <span>Miasto: {airportDetails.city}</span>
+              <span>Nazwa: {airportDetails.name}</span>
+              <span>KOD: {airportDetails.iata_code}</span>
+            </>
+          )}
         </header>
       </div>
     </>
   );
 }
-
-export default AirportDetails;
+const mapStateToprops = (store) => {
+  return {
+    getAirportById: (id) => getAirportByIdSelector(store, id),
+  };
+};
+export default connect(mapStateToprops)(AirportDetails);
