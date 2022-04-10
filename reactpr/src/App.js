@@ -2,9 +2,12 @@ import Header from "./components/Header/Header";
 import styles from "./App.module.scss";
 import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { connect } from "react-redux";
+import airports from "./common/consts/airports";
 
-function App() {
+function App(props) {
   const userExist = localStorage.getItem("user");
+  props.setInitialAirportsList(airports);
 
   if (!userExist) {
     return <Navigate to="/" />;
@@ -16,5 +19,13 @@ function App() {
     </div>
   );
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setInitialAirportsList: (value) =>
+      dispatch({ type: "SET_INITIAL_AIRPORTS_LIST", value: value }),
+  };
+};
 
-export default App;
+export default connect(null, mapDispatchToProps)(App);
+
+// export default App;
