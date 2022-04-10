@@ -2,7 +2,7 @@ import Header from "./components/Header/Header";
 import styles from "./App.module.scss";
 import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import airports from "./common/consts/airports";
 
 function App(props) {

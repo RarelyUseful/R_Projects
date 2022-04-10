@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import commonColumnsStyles from "../../common/styles/Columns.module.scss";
 import { Link } from "react-router-dom";
 import { Stack, Paper } from "@mui/material";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 function AirportsList(props) {
   return (

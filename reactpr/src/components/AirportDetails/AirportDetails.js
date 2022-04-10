@@ -8,17 +8,27 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
 import { getAirportByIdSelector } from "../../redux/airports/selectors";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 function AirportDetails(props) {
   let navigate = useNavigate();
   const { id } = useParams();
   const handleRemoveAirportFromList = () => {
-    props.setInitialAirportsList(id);
+    dispatch({
+      type: "REMOVE_AIRPORT_BY_ID",
+      value: id,
+    });
     navigate(-1);
   };
-
+  const airportDetails = useSelector((store) =>
+    getAirportByIdSelector(store, id)
+  );
+  const dispatch = useDispatch();
+  // const setInitialAirportsList = dispatch({
+  //   type: "REMOVE_AIRPORT_BY_ID",
+  //   value: value,
+  // });
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
-  const airportDetails = props.getAirportById(id);
+  // const airportDetails = getAirportById(id);
   return (
     <>
       <Dialog open={dialogIsOpen}>
@@ -51,15 +61,18 @@ function AirportDetails(props) {
     </>
   );
 }
-const mapStateToprops = (store) => {
-  return {
-    getAirportById: (id) => getAirportByIdSelector(store, id),
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setInitialAirportsList: (value) =>
-      dispatch({ type: "REMOVE_AIRPORT_BY_ID", value: value }),
-  };
-};
-export default connect(mapStateToprops, mapDispatchToProps)(AirportDetails);
+// const mapStateToprops = (store) => {
+//   return {
+//     getAirportById: (id) => getAirportByIdSelector(store, id),
+//   };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     setInitialAirportsList: (value) =>
+//       dispatch({ type: "REMOVE_AIRPORT_BY_ID", value: value }),
+//   };
+// };
+// export default connect(mapStateToprops, mapDispatchToProps)(AirportDetails);
+
+export default AirportDetails;
