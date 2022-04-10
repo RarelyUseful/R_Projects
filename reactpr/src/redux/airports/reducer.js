@@ -1,9 +1,10 @@
 import { initialAirportsState } from "./initialState";
+import { airports } from "../../common/consts/airports";
 
 export const airportReducer = (state = initialAirportsState, action) => {
   switch (action.type) {
     case "SET_INITIAL_AIRPORTS_LIST":
-      return { ...state, airports: action.value };
+      return { ...state, airports: airports };
     case "REMOVE_AIRPORT_BY_ID":
       return {
         ...state,

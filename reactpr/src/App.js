@@ -4,12 +4,12 @@ import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import airports from "./common/consts/airports";
+//import airports from "./common/consts/airports";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: "SET_INITIAL_AIRPORTS_LIST", value: airports });
+    dispatch({ type: "SET_INITIAL_AIRPORTS_LIST" });
   }, []);
   const userExist = localStorage.getItem("user");
   //props.setInitialAirportsList(airports);

@@ -3,13 +3,13 @@ import styles from "../../common/styles/Headers.module.scss";
 import { Link } from "react-router-dom";
 import { Typography, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import airports from "../../common/consts/airports";
+//import airports from "../../common/consts/airports";
 
 function Header() {
   const currentUser = JSON.parse(window.localStorage.getItem("user"));
   const dispatch = useDispatch();
   const resetAirports = () => {
-    dispatch({ type: "SET_INITIAL_AIRPORTS_LIST", value: airports });
+    dispatch({ type: "SET_INITIAL_AIRPORTS_LIST" });
   };
   return (
     <div className={styles.Wrapper}>
