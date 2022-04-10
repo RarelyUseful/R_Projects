@@ -13,6 +13,7 @@ function AirportDetails(props) {
   let navigate = useNavigate();
   const { id } = useParams();
   const handleRemoveAirportFromList = () => {
+    props.setInitialAirportsList(id);
     navigate(-1);
   };
 
@@ -55,4 +56,10 @@ const mapStateToprops = (store) => {
     getAirportById: (id) => getAirportByIdSelector(store, id),
   };
 };
-export default connect(mapStateToprops)(AirportDetails);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setInitialAirportsList: (value) =>
+      dispatch({ type: "REMOVE_AIRPORT_BY_ID", value: value }),
+  };
+};
+export default connect(mapStateToprops, mapDispatchToProps)(AirportDetails);
